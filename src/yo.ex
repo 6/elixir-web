@@ -21,6 +21,19 @@ defmodule Yo do
     end
   end
   
+  defmacro get(path, [file: bin]) when is_binary(bin) do
+    quote do
+      def handle(:get, unquote(path), _data) do
+        case File.read(unquote(bin)) do
+        match: { :ok, data }
+          { :ok, data }
+        else:
+          { :error, "404!" }
+        end
+      end
+    end
+  end
+
   defmacro post(path, [do: code]) do
     # hygiene:false lets us access _data variable in server
     quote hygiene: false do

@@ -5,6 +5,8 @@ defmodule HelloServer do
     { :ok, "Hello world!" }
   end
 
+  get "/demo", file: "demo.html"
+
   post "/" do
     { :ok, "Post!\n_data is: #{inspect _data}" }
   end

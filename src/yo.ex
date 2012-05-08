@@ -22,6 +22,11 @@ defmodule Yo do
   end
   
   defmacro post(path, [do: code]) do
-    #TODO
+    # hygiene:false lets us access _data variable in server
+    quote hygiene: false do
+      def handle(:post, unquote(path), _data) do
+        unquote(code)
+      end
+    end
   end
 end

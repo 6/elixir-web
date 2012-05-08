@@ -14,7 +14,11 @@ defmodule Yo do
   end
   
   defmacro get(path, [do: code]) do
-    #TODO
+    quote do
+      def handle(:get, unquote(path), _data) do
+        unquote(code)
+      end
+    end
   end
   
   defmacro post(path, [do: code]) do

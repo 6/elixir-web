@@ -1,11 +1,15 @@
 defmodule Yo do
   defmacro __using__(module, _opts) do
+    root_folder = Keyword.get(_opts, :root, ".")
+
     quote do
       import Yo, only: [get: 2, post: 2]
 
       def start do
         Yo.start unquote(module)
       end
+      
+      defp public_root, do: unquote(root_folder)
     end
   end
 
@@ -24,7 +28,8 @@ defmodule Yo do
   defmacro get(path, [file: bin]) when is_binary(bin) do
     quote do
       def handle(:get, unquote(path), _data) do
-        case File.read(unquote(bin)) do
+        file_path = File.join([public_root(), unquote(bin)])
+        case File.read(file_path) do
         match: { :ok, data }
           { :ok, data }
         else:

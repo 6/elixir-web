@@ -1,5 +1,5 @@
 defmodule HelloServer do
-  use Yo
+  use Yo, root: "public"
 
   get "/" do
     { :ok, "Hello world!" }
